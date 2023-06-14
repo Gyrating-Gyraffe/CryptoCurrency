@@ -1,0 +1,7 @@
+#reportsSection, #aboutSection {
+    display: none;
+}
+
+.card {
+    display: inline-block;
+}
