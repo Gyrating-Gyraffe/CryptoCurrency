@@ -1,7 +1,22 @@
+:root {
+    --main-bg-color: rgb(35, 47, 61);
+}
+
+body {
+    background-color: var(--main-bg-color);
+    height: 100%;
+    overflow: hidden;
+}
+
 #reportsSection, #aboutSection {
     display: none;
 }
 
 .card {
     display: inline-block;
+}
+
+#coinsContainer {
+    position: absolute;
+    transition: transform 0.75s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
