@@ -1,4 +1,4 @@
-/// <reference path="jQuery/jquery-3.7.0.js"/>
+/// <reference path="../jQuery/jquery-3.7.0.js"/>
 "use strict";
 
 $(() => {
