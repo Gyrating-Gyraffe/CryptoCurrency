@@ -2,10 +2,13 @@
     --main-bg-color: rgb(35, 47, 61);
 }
 
+html {
+    transition: all 1s;
+}
+
 body {
     background-color: var(--main-bg-color);
     height: 100%;
-    overflow: hidden;
 }
 
 #reportsSection, #aboutSection {
@@ -18,5 +21,5 @@ body {
 
 #coinsContainer {
     position: absolute;
-    transition: transform 0.75s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
 }

@@ -8,27 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import requestData from './cryptoDataModule.js';
 $(() => {
-    $(window).on('wheel', function (event) {
-        var _a;
-        const wheelEvent = event.originalEvent;
-        const scrollMult = +$(".scrollable").attr("data-scrollMult");
-        const yPos = +$(".scrollable").attr("data-yPos"); //        Get from attribute yPos
-        const newYPos = desiredYPos(yPos, -wheelEvent.deltaY * scrollMult); //       Calculate new yPos
-        $(".scrollable").attr("data-yPos", newYPos); //             Set to attribute yPos
-        (_a = $(".scrollable")) === null || _a === void 0 ? void 0 : _a.css("transform", `translateY(${newYPos}px)`);
-    });
-    function desiredYPos(yPos, deltaY) {
-        const maxY = window.innerHeight;
-        const minY = 0;
-        yPos += deltaY;
-        if (yPos > maxY)
-            yPos = maxY;
-        else if (yPos < minY)
-            yPos = minY;
-        return yPos;
-    }
-    //setupParallaxScroll($("#coinsContainer")[0]);
+    // $(window).on('scroll', function(event) {
+    //     const wheelEvent = event.originalEvent as WheelEvent;
+    //     const scrollMult = +$(".scrollable").attr("data-scrollMult");
+    //     const yPos = +$(".scrollable").attr("data-yPos"); //        Get from attribute yPos
+    //     const newYPos = desiredYPos(yPos, -wheelEvent.deltaY * scrollMult); //       Calculate new yPos
+    //     $(".scrollable").attr("data-yPos", newYPos); //             Set to attribute yPos
+    //     $(".scrollable")?.css("transform", `translateY(${newYPos}px)`);
+    // });
+    // function desiredYPos(yPos, deltaY) {
+    //     const maxY = window.innerHeight;
+    //     const minY = -1500;
+    //     yPos += deltaY;
+    //     if(yPos > maxY) yPos = maxY;
+    //     else if(yPos < minY) yPos = minY;
+    //     return yPos;
+    // }
     $("a.nav-link").click(function () {
         $("a.nav-link").removeClass("active");
         $(this).addClass("active");
@@ -39,7 +36,7 @@ $(() => {
     $("#homeLink").click(() => __awaiter(void 0, void 0, void 0, function* () { return yield handleHome(); }));
     function handleHome() {
         return __awaiter(this, void 0, void 0, function* () {
-            const coins = yield getJSON("https://api.coingecko.com/api/v3/coins/list");
+            const coins = yield requestData("https://api.coingecko.com/api/v3/coins/list");
             displayCoins(coins);
         });
     }
@@ -59,23 +56,28 @@ $(() => {
         }
         $("#coinsContainer").html(html);
     }
-    function getJSON(url) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch(url);
-            const json = yield response.json();
-            return json;
-        });
-    }
-    function setupParallaxScroll(element) {
-        // Push element out of view
-        element.style.position = "absolute";
-        let yPos = 0;
-        // Subscribe to scrolling action
-        addEventListener("wheel", (event) => {
-            yPos -= event.deltaY;
-            element.style.transform = `translateY(0, ${yPos}px)`;
-            console.log("Scrolling " + element.id + " " + yPos);
-            console.log(element.getBoundingClientRect().top);
-        });
-    }
+    // async function getJSON(url: string) {
+    //     try {
+    //         const response = await fetch(url+"s");
+    //         const json = await response.json();
+    //         if(json.error) throw new Error(json.error)
+    //         saveObject(url, json);
+    //         return json;
+    //     }
+    //     catch (err) {
+    //         console.error("Couldn't load data from API\n " + err);
+    //         console.log("Showing stored data due to error\n " + err);   
+    //         const storedJson = loadObject(url);
+    //         console.log("Date of stored data: " + storedJson.date);
+    //         return storedJson.content;
+    //     }
+    // }
+    // function getLocalStorageItemSize(key) {
+    //     const value = localStorage.getItem(key);
+    //     if (value !== null) {
+    //       const sizeInBytes = new Blob([value]).size;
+    //       return sizeInBytes;
+    //     }
+    //     return 0;
+    //   }
 });
