@@ -9,6 +9,7 @@ html {
 body {
     background-color: var(--main-bg-color);
     height: 100%;
+    background-image: url("https://wallpapers.com/images/featured/9w27dqmc4nrs3xwd.jpg");
 }
 
 #reportsSection, #aboutSection {
@@ -17,6 +18,10 @@ body {
 
 .card {
     display: inline-block;
+    background-color: rgba(255, 255, 255, .15);  
+    backdrop-filter: blur(5px);
+    margin: 50px;
+    color: white;
 }
 
 #coinsContainer {

@@ -25,25 +25,27 @@ const cryptoDataModule = (() => {
             // Implementation of retrieving data from the cache using the provided key
             // Return the cached data or null if not found
             const storedObj = JSON.parse(localStorage.getItem(key));
-            return storedObj ? { date: storedObj.date, content: storedObj.content } : null;
+            return storedObj ? { timestamp: storedObj.timestamp, content: storedObj.content } : null;
         }
         set(key, value) {
             // Implementation of storing data in the cache using the provided key and value
-            const obj = { date: new Date(), content: value };
+            const obj = { timestamp: new Date(), content: value };
             localStorage.setItem(key, JSON.stringify(obj));
         }
         isValid(data) {
             const timeout = 20000; // Timeout in miliseconds
-            if (data.date)
-                return !((new Date().getTime() - new Date(data.date).getTime()) > timeout);
+            // Timestamp validation
+            if (data.timestamp)
+                return !((new Date().getTime() - new Date(data.timestamp).getTime()) > timeout);
             return false;
         }
     }
-    const requestData = (url) => __awaiter(void 0, void 0, void 0, function* () {
+    const requestData = (url, ignoreCache) => __awaiter(void 0, void 0, void 0, function* () {
         const apiClient = new ApiClient();
         const cacheProvider = new CacheProvider();
         const cachedData = cacheProvider.get(url);
-        if (cacheProvider.isValid(cachedData)) {
+        // Return cached data if it exists, it's valid, and we don't intentionally want to ignore it
+        if (cachedData && cacheProvider.isValid(cachedData) && !ignoreCache) {
             console.log("RETURNING CACHEDDATA because IT IS VALID");
             return cachedData.content;
         }
@@ -59,7 +61,7 @@ const cryptoDataModule = (() => {
             // Handle API error
             console.error('Failed to fetch data from API:', error);
             console.log("RETURNING CACHEDDATA because API UNRESPONSIVE");
-            return cachedData.content;
+            return cachedData ? cachedData.content : { undefined };
         }
     });
     return {
