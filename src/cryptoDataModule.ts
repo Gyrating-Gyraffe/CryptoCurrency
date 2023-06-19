@@ -25,7 +25,7 @@ const cryptoDataModule = (() => {
         }
         // Validates data (for cache retreival)
         isValid(data: any): boolean {
-            const timeout = 1; // Timeout in miliseconds
+            const timeout = 120000; // Timeout in miliseconds
             // Timestamp validation
             if(data.timestamp) return !((new Date().getTime() - new Date(data.timestamp).getTime()) > timeout);
             return false;
