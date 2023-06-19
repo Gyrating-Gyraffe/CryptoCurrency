@@ -35,7 +35,7 @@ const cryptoDataModule = (() => {
         }
         // Validates data (for cache retreival)
         isValid(data) {
-            const timeout = 20000; // Timeout in miliseconds
+            const timeout = 1; // Timeout in miliseconds
             // Timestamp validation
             if (data.timestamp)
                 return !((new Date().getTime() - new Date(data.timestamp).getTime()) > timeout);
@@ -52,10 +52,10 @@ const cryptoDataModule = (() => {
             return cachedData.content;
         }
         try {
-            const apiData = yield apiClient.fetchData(url);
+            const apiData = yield apiClient.fetchData(url); // Fetch API data
             if (apiData.error)
-                throw new Error(apiData.error);
-            cacheProvider.set(url, apiData);
+                throw new Error(apiData.error); // if API returns an error on their side
+            cacheProvider.set(url, apiData); // Store data
             console.log("RETURNING APIDATA because CACHEDATA IS INVALID");
             return apiData;
         }
@@ -63,6 +63,7 @@ const cryptoDataModule = (() => {
             // Handle API error
             console.error('Failed to fetch data from API:', error);
             console.log("RETURNING CACHEDDATA because API UNRESPONSIVE");
+            // Return cache if exists (valid or not doesn't matter), undefined if doesn't exist
             return cachedData ? cachedData.content : { undefined };
         }
     });

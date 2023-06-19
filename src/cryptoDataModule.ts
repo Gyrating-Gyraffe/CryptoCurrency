@@ -25,7 +25,7 @@ const cryptoDataModule = (() => {
         }
         // Validates data (for cache retreival)
         isValid(data: any): boolean {
-            const timeout = 20000; // Timeout in miliseconds
+            const timeout = 1; // Timeout in miliseconds
             // Timestamp validation
             if(data.timestamp) return !((new Date().getTime() - new Date(data.timestamp).getTime()) > timeout);
             return false;
@@ -36,6 +36,7 @@ const cryptoDataModule = (() => {
         const apiClient = new ApiClient();
         const cacheProvider = new CacheProvider();
         const cachedData = cacheProvider.get(url);
+
         // Return cached data if it exists, it's valid, and we don't intentionally want to ignore it
         if(cachedData && cacheProvider.isValid(cachedData) && !ignoreCache) {
             console.log("RETURNING CACHEDDATA because IT IS VALID");
@@ -43,9 +44,9 @@ const cryptoDataModule = (() => {
         } 
 
         try {
-            const apiData = await apiClient.fetchData(url);
-            if(apiData.error) throw new Error(apiData.error);
-            cacheProvider.set(url, apiData);
+            const apiData = await apiClient.fetchData(url); // Fetch API data
+            if(apiData.error) throw new Error(apiData.error); // if API returns an error on their side
+            cacheProvider.set(url, apiData); // Store data
 
             console.log("RETURNING APIDATA because CACHEDATA IS INVALID");
             return apiData;
@@ -54,7 +55,8 @@ const cryptoDataModule = (() => {
             // Handle API error
             console.error('Failed to fetch data from API:', error);
             console.log("RETURNING CACHEDDATA because API UNRESPONSIVE");
-            return cachedData ? cachedData.content : { undefined };
+            // Return cache if exists (valid or not doesn't matter), undefined if doesn't exist
+            return cachedData ? cachedData.content : { undefined }; 
         }
     }
 
