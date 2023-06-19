@@ -12,10 +12,12 @@
     crossorigin="anonymous"></script>
   <script src="jQuery/jquery-3.7.0.js"></script>
   <link rel="stylesheet" href="style.css">
-  <script type="module" src="build/main.js"></script>
+  <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+  <script defer type="module" src="build/main.js"></script>
 </head>
 
 <body>
+  <div id="chartContainer" style="height: 300px; width: 100%;"></div>
   <ul class="nav nav-pills" data-yPos="0" data-scrollMult="0.4">
     <li class="nav-item">
       <a id="homeLink" class="nav-link active" href="#" data-section="homeSection">Home</a>

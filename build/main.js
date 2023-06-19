@@ -9,7 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import requestData from './cryptoDataModule.js';
+import { chart } from './chart.js';
 $(() => {
+    chart.render();
     $("a.nav-link").click(function () {
         $("a.nav-link").removeClass("active");
         $(this).addClass("active");

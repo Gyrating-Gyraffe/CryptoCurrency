@@ -7,41 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import CacheProvider from "./cacheProvider.js";
+import ApiClient from "./apiClient.js";
 // CryptoDataModule.ts
 const cryptoDataModule = (() => {
-    class ApiClient {
-        // Fetches data from the API 
-        // Returns a JSON object
-        fetchData(url) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const response = yield fetch(url);
-                const json = yield response.json();
-                return json;
-            });
-        }
-    }
-    class CacheProvider {
-        // Retrieves data from the cache using the provided key
-        // Return the cached data or null if not found
-        get(key) {
-            const storedObj = JSON.parse(localStorage.getItem(key));
-            return storedObj ? { timestamp: storedObj.timestamp, content: storedObj.content } : null;
-        }
-        // Stores data in the cache using the provided key and value
-        // Data is stored inside an object containing "timestamp" - the time of storing and "content" - what we are storing
-        set(key, value) {
-            const obj = { timestamp: new Date(), content: value };
-            localStorage.setItem(key, JSON.stringify(obj));
-        }
-        // Validates data (for cache retreival)
-        isValid(data) {
-            const timeout = 120000; // Timeout in miliseconds
-            // Timestamp validation
-            if (data.timestamp)
-                return !((new Date().getTime() - new Date(data.timestamp).getTime()) > timeout);
-            return false;
-        }
-    }
     const requestData = (url, ignoreCache) => __awaiter(void 0, void 0, void 0, function* () {
         const apiClient = new ApiClient();
         const cacheProvider = new CacheProvider();
@@ -54,7 +23,7 @@ const cryptoDataModule = (() => {
         try {
             const apiData = yield apiClient.fetchData(url); // Fetch API data
             if (apiData.error)
-                throw new Error(apiData.error); // if API returns an error on their side
+                throw new Error(apiData.error); // if API returns an error on its side
             cacheProvider.set(url, apiData); // Store data
             console.log("RETURNING APIDATA because CACHEDATA IS INVALID");
             return apiData;

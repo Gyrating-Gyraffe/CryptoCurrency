@@ -1,7 +1,10 @@
 "use strict";
 import requestData from './cryptoDataModule.js';
+import { chart } from './chart.js';
+
 
 $(() => {
+    chart.render();
     $("a.nav-link").click(function () {
         $("a.nav-link").removeClass("active");
         $(this).addClass("active");
@@ -17,7 +20,7 @@ $(() => {
         await handleMoreInfo(coinId);
     });
 
-    async function handleMoreInfo(coinId) {
+    async function handleMoreInfo(coinId: string) {
         const coin = await requestData("https://api.coingecko.com/api/v3/coins/" + coinId);
         const imageSource = coin.image.thumb;
         const usd = coin.market_data.current_price.usd;

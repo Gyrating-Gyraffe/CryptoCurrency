@@ -1,0 +1,23 @@
+
+
+
+
+data(one item in array): {
+    type: "line",
+    visible: false,
+    showInLegend: true,
+    yValueFormatString: "##.00mn",
+    name: "Season 1",
+    dataPoints: [
+        { label: "Ep. 1", y: 2.22 },
+        { label: "Ep. 2", y: 2.20 },
+        { label: "Ep. 3", y: 2.44 },
+        { label: "Ep. 4", y: 2.45 },
+        { label: "Ep. 5", y: 2.58 },
+        { label: "Ep. 6", y: 2.44 },
+        { label: "Ep. 7", y: 2.40 },
+        { label: "Ep. 8", y: 2.72 },
+        { label: "Ep. 9", y: 2.66 },
+        { label: "Ep. 10", y: 3.04 }
+    ]
+}
