@@ -9,9 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import requestData from './cryptoDataModule.js';
-import { chart } from './chart.js';
+import { ChartManager } from './Chart/chartManager.js';
+//import { chart } from './chart.js';
 $(() => {
-    chart.render();
+    const chartManager = new ChartManager();
+    // chart.render();
+    let selectedIDs = [];
+    $("#coinsContainer").on("click", ".coin-select", function () {
+        const coinId = $(this).attr("id").substring(11);
+        selectedIDs.push(coinId);
+        chartManager.addID(coinId);
+    });
     $("a.nav-link").click(function () {
         $("a.nav-link").removeClass("active");
         $(this).addClass("active");
@@ -59,6 +67,9 @@ $(() => {
             html += `
                 <div class="card" style="width: 18rem; height: 20rem; overflow: auto;">
                 <div class="card-body">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input coin-select" type="checkbox" role="switch" id="coinSelect_${coins[i].id}">
+                    </div>
                     <h5 class="card-title">${coins[i].symbol}</h5>
                     <p class="card-text">${coins[i].name}</p>
 

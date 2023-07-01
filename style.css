@@ -10,6 +10,8 @@ body {
     background-color: var(--main-bg-color);
     height: 100%;
     background-image: url("https://wallpapers.com/images/featured/9w27dqmc4nrs3xwd.jpg");
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 #reportsSection, #aboutSection {
